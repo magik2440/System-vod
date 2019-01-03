@@ -26,9 +26,10 @@ public class VOD_okienko {
     private JPanel panel_rejestracji;
     private JPanel JPanel_admin_main;
     private JPanel JPanel_admin_menu;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JButton filmyButton;
+    private JButton serialeButton;
+    private JButton liveButton;
+    private JPanel JPanel_admin_film;
 
     public VOD_okienko() {
         cancelButton.addActionListener(new ActionListener() {

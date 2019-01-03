@@ -1,17 +1,19 @@
 package produkty;
 
+import java.time.LocalTime;
 import java.util.Set;
 
 public class Film extends ProdukGlowny {
     private String gatunek;
     private Set<String> lista_aktorow;
-    private String inki_zwiastunow;
+    private Set<String> linki_zwiastunow;
     private double cena;
-    private double czas_ogladania;
+    private LocalTime czas_wielokrotnego_ogladania;
     private int promocja;
 
     public Film() {
     }
+
 
     public int getPromocja() {
         return promocja;
@@ -37,14 +39,6 @@ public class Film extends ProdukGlowny {
         this.lista_aktorow = lista_aktorow;
     }
 
-    public String getInki_zwiastunow() {
-        return inki_zwiastunow;
-    }
-
-    public void setInki_zwiastunow(String inki_zwiastunow) {
-        this.inki_zwiastunow = inki_zwiastunow;
-    }
-
     public double getCena() {
         return cena;
     }
@@ -53,11 +47,19 @@ public class Film extends ProdukGlowny {
         this.cena = cena;
     }
 
-    public double getCzas_ogladania() {
-        return czas_ogladania;
+    public Set<String> getLinki_zwiastunow() {
+        return linki_zwiastunow;
     }
 
-    public void setCzas_ogladania(double czas_ogladania) {
-        this.czas_ogladania = czas_ogladania;
+    public void setLinki_zwiastunow(Set<String> linki_zwiastunow) {
+        this.linki_zwiastunow = linki_zwiastunow;
+    }
+
+    public LocalTime getCzas_wielokrotnego_ogladania() {
+        return czas_wielokrotnego_ogladania;
+    }
+
+    public void setCzas_wielokrotnego_ogladania(LocalTime czas_wielokrotnego_ogladania) {
+        this.czas_wielokrotnego_ogladania = czas_wielokrotnego_ogladania;
     }
 }
