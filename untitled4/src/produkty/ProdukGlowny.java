@@ -1,36 +1,43 @@
 package produkty;
 
 import java.awt.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Set;
+import java.util.Queue;
 
 public abstract class ProdukGlowny {
-    private Image zdjecie;
-    private String nazwa;
+    private String zdjecie_sciezka;
+    private String tytul;
     private String opis;
-    private LocalDate data_produkcji;
-    private LocalTime czas_trwania;
-    private Set<String> kraje_produkcji;
+    private String data_produkcji;
+    private String czas_trwania;
+    private Queue<String> kraje_produkcji;
     private double ocena_uzytkownika;
+    private int statystyka_ogladalnosci;
 
     public ProdukGlowny() {
     }
 
-    public Image getZdjecie() {
-        return zdjecie;
+    public int getStatystyka_ogladalnosci() {
+        return statystyka_ogladalnosci;
     }
 
-    public void setZdjecie(Image zdjecie) {
-        this.zdjecie = zdjecie;
+    public void setStatystyka_ogladalnosci(int statystyka_ogladalnosci) {
+        this.statystyka_ogladalnosci = statystyka_ogladalnosci;
     }
 
-    public String getNazwa() {
-        return nazwa;
+    public String getZdjecie_sciezka() {
+        return zdjecie_sciezka;
     }
 
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+    public void setZdjecie_sciezka(String zdjecie_sciezka) {
+        this.zdjecie_sciezka = zdjecie_sciezka;
+    }
+
+    public String getTytul() {
+        return tytul;
+    }
+
+    public void setTytul(String tytul) {
+        this.tytul = tytul;
     }
 
     public String getOpis() {
@@ -41,11 +48,11 @@ public abstract class ProdukGlowny {
         this.opis = opis;
     }
 
-    public Set<String> getKraje_produkcji() {
+    public Queue<String> getKraje_produkcji() {
         return kraje_produkcji;
     }
 
-    public void setKraje_produkcji(Set<String> kraje_produkcji) {
+    public void setKraje_produkcji(Queue<String> kraje_produkcji) {
         this.kraje_produkcji = kraje_produkcji;
     }
 
@@ -57,19 +64,28 @@ public abstract class ProdukGlowny {
         this.ocena_uzytkownika = ocena_uzytkownika;
     }
 
-    public LocalDate getData_produkcji() {
+    public String getData_produkcji() {
         return data_produkcji;
     }
 
-    public void setData_produkcji(LocalDate data_produkcji) {
+    public void setData_produkcji(String data_produkcji) {
         this.data_produkcji = data_produkcji;
     }
 
-    public LocalTime getCzas_trwania() {
+    public String getCzas_trwania() {
         return czas_trwania;
     }
 
-    public void setCzas_trwania(LocalTime czas_trwania) {
+    public void setCzas_trwania(String czas_trwania) {
         this.czas_trwania = czas_trwania;
+    }
+
+    public String toStringKraje(){
+        String temp = "";
+        for (String kraj : kraje_produkcji) {
+            temp = temp + kraj + ", ";
+        }
+        temp = temp.substring(0, temp.length()-2);
+        return temp;
     }
 }

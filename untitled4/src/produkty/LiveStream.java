@@ -3,18 +3,18 @@ package produkty;
 import java.util.Date;
 
 public class LiveStream extends ProdukGlowny {
-    private Date data_wyswietlenia;
+    private String data_wyswietlenia;
     private double jednorazowa_cena;
     private int promocja;
 
     public LiveStream() {
     }
 
-    public Date getData_wyswietlenia() {
+    public String getData_wyswietlenia() {
         return data_wyswietlenia;
     }
 
-    public void setData_wyswietlenia(Date data_wyswietlenia) {
+    public void setData_wyswietlenia(String data_wyswietlenia) {
         this.data_wyswietlenia = data_wyswietlenia;
     }
 

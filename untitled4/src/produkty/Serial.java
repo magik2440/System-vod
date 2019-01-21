@@ -1,10 +1,11 @@
 package produkty;
 
+import java.util.Queue;
 import java.util.Set;
 
 public class Serial extends ProdukGlowny{
     private String gatunek;
-    private Set<String> lista_aktorow;
+    private Queue<String> lista_aktorow;
     private int sezony;
     private int odcinki;
     public Serial() {
@@ -18,11 +19,11 @@ public class Serial extends ProdukGlowny{
         this.gatunek = gatunek;
     }
 
-    public Set<String> getLista_aktorow() {
+    public Queue<String> getLista_aktorow() {
         return lista_aktorow;
     }
 
-    public void setLista_aktorow(Set<String> lista_aktorow) {
+    public void setLista_aktorow(Queue<String> lista_aktorow) {
         this.lista_aktorow = lista_aktorow;
     }
 
