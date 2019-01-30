@@ -4,16 +4,25 @@ import java.awt.*;
 import java.util.Queue;
 
 public abstract class ProdukGlowny {
-    private String zdjecie_sciezka;
     private String tytul;
+    private String czas_trwania;
     private String opis;
     private String data_produkcji;
-    private String czas_trwania;
-    private Queue<String> kraje_produkcji;
+    private String zdjecie_sciezka;
     private double ocena_uzytkownika;
+    private double cena;
     private int statystyka_ogladalnosci;
+    private Queue<String> kraje_produkcji;
 
     public ProdukGlowny() {
+    }
+
+    public double getCena() {
+        return cena;
+    }
+
+    public void setCena(double cena) {
+        this.cena = cena;
     }
 
     public int getStatystyka_ogladalnosci() {

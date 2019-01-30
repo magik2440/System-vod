@@ -10,7 +10,6 @@ public class Film extends ProdukGlowny {
     private String gatunek;
     private Queue<String> lista_aktorow;
     private Queue<URI> linki_zwiastunow = new ArrayDeque<>();
-    private Double cena;
     private String czas_wielokrotnego_ogladania;
     private int promocja;
 
@@ -40,14 +39,6 @@ public class Film extends ProdukGlowny {
 
     public void setLista_aktorow(Queue<String> lista_aktorow) {
         this.lista_aktorow = lista_aktorow;
-    }
-
-    public double getCena() {
-        return cena;
-    }
-
-    public void setCena(Double cena) {
-        this.cena = cena;
     }
 
     public Queue<URI> getLinki_zwiastunow() {
