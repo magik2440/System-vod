@@ -754,7 +754,7 @@
                       <color color="-16777216"/>
                     </border>
                     <children>
-                      <component id="fb392" class="javax.swing.JLabel">
+                      <component id="fb392" class="javax.swing.JLabel" binding="Label_a_f_gatunek">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -762,7 +762,7 @@
                           <text value="gatunek:"/>
                         </properties>
                       </component>
-                      <component id="c5643" class="javax.swing.JLabel">
+                      <component id="c5643" class="javax.swing.JLabel" binding="Label_a_f_dataProdukcji">
                         <constraints>
                           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -778,7 +778,7 @@
                           <text value="kraje produkcji:"/>
                         </properties>
                       </component>
-                      <component id="fa1a0" class="javax.swing.JLabel">
+                      <component id="fa1a0" class="javax.swing.JLabel" binding="Label_a_f_listaAktorow">
                         <constraints>
                           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>

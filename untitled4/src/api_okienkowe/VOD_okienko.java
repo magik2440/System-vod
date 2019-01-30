@@ -1,11 +1,9 @@
 package api_okienkowe;
 
 import dodanie_nowych_produktow.NoweFilmy;
+import dodanie_nowych_produktow.NoweLiveStreamy;
 import dodanie_nowych_produktow.NoweSeriale;
-import produkty.Film;
-import produkty.ProdukGlowny;
-import produkty.Serial;
-import produkty.Sezon;
+import produkty.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -86,17 +84,21 @@ public class VOD_okienko {
     private JSpinner spinner1;
     private JScrollPane scrollPane1;
     private JLabel JLabel_odcinek_wyswietl;
+    private JLabel Label_a_f_dataProdukcji;
+    private JLabel Label_a_f_gatunek;
+    private JLabel Label_a_f_listaAktorow;
     private JScrollPane JScrollPane_tabela_produktow;
     private List<ProdukGlowny> produktArrayList;/* = new ArrayList<>();*/
    // private List<Serial> serialArrayList;
 //    private List<LiveStream> liveStreamsArrayList;
 
     public VOD_okienko() {
-       // JPanel_menu.setLayout(new BoxLayout(JPanel_menu, BoxLayout.Y_AXIS));
         JP_menu_dolny_tabela.setLayout(new BoxLayout(JP_menu_dolny_tabela, BoxLayout.Y_AXIS));
         NoweFilmy noweFilmy = new NoweFilmy();
         produktArrayList = noweFilmy.getLista_filmow();
-
+        nowyButton.setVisible(false);
+        TextField_oknoLoginu_login.setEditable(false);
+        PasswordField_oknoLoginu_haslo.setEditable(false);
         createTable(produktArrayList);
 
         cancelButton.addActionListener(new ActionListener() {
@@ -194,6 +196,18 @@ public class VOD_okienko {
 
             }
         });
+        liveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel_menu_dolny.removeAll();
+                JPanel_menu_dolny.add(JP_menu_dolny1);
+                JPanel_menu_dolny.repaint();
+                JPanel_menu_dolny.revalidate();
+                NoweLiveStreamy noweLiveStreamy = new NoweLiveStreamy();
+                produktArrayList = noweLiveStreamy.getLista_liveStream();
+                createTable(produktArrayList);
+            }
+        });
     }
 
     private List<Film> createTable(List<ProdukGlowny> arrayList) {
@@ -270,60 +284,14 @@ public class VOD_okienko {
                         Film produkt = (Film) produktArrayList.get(tabela_produktow.getSelectedRow());
                         ustawFilm(produkt);
                     }
-                    else {
+                    else if(produktArrayList.get(tabela_produktow.getSelectedRow()) instanceof Serial){
                        Serial produkt = (Serial)produktArrayList.get(tabela_produktow.getSelectedRow());
                        ustawSerial(produkt);
-
                     }
-                    //przejscie do menu wyswietlania produktu pojedynczego
-                   /* Label_a_f_tytul.setText(produkt.getTytul());
-                    Label_a_f_czasTrwania.setText(produkt.getCzas_trwania());
-                    Label_a_f_opis.setText(produkt.getOpis());
-                    Label_a_f_zdjecie.setText("");
-                    ImageIcon icon1 = new ImageIcon(new ImageIcon(produkt.getZdjecie_sciezka()).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
-                    //dodanie linkow do Jpanel_a_f_Linki
-                    //sprawdz czy wql jest kolejka!
-                    JPanel_a_f_linki.setLayout(new BoxLayout(JPanel_a_f_linki, BoxLayout.Y_AXIS));
-                    JPanel_a_f_linki.removeAll();
-                    if (produkt.getLinki_zwiastunow().size() != 0) {
-                        JLabel jlabels[] = new JLabel[produkt.getLinki_zwiastunow().size()];
-                        //tworzymy kopie kolejki
-                        Queue<URI> linki = new ArrayDeque<>(produkt.getLinki_zwiastunow());
-                        for (int i = 0; i < jlabels.length; i++) {
-                            URI uri = linki.remove();
-                            jlabels[i] = new JLabel();
-                            jlabels[i].setText("<html> <a href=\"\">" + "link " + (i + 1) + "</a></html>");
-                            jlabels[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
-                            hyperlink(jlabels[i], uri);
-                            JPanel_a_f_linki.add(jlabels[i]);
-                        }
+                   else {
+                        LiveStream produkt = (LiveStream) produktArrayList.get(tabela_produktow.getSelectedRow());
+                        ustawLiveStream(produkt);
                     }
-                    JPanel_a_f_linki.validate();
-                    JPanel_a_f_linki.repaint();
-                    Label_a_f_zdjecie.setIcon(icon1);
-                    Label_a_f_gatunek1.setText(produkt.getGatunek());
-                    Label_a_f_dataProdukcji1.setText(produkt.getData_produkcji());
-                    //lista
-                    String nazwy_krajow = "";
-                    for (String kraj : produkt.getKraje_produkcji())
-                        nazwy_krajow = nazwy_krajow + kraj + " ";
-                    Label_a_f_krajeProdukcji1.setText(new NoweFilmy().ustawHTML(100, nazwy_krajow));
-                    String aktorzy = "";
-                    for (String aktor : produkt.getLista_aktorow())
-                        aktorzy = aktorzy + aktor + "<br/>";
-                    Label_a_f_listaAktorow1.setText("<html>" + aktorzy + "</html>");
-                    Label_a_f_cena1.setText(Double.toString(produkt.getCena()) + "zl");
-
-                    //dla filmu
-                    Label_a_f_czasWielokrotnegoObejrzenia1.setText(produkt.getCzas_wielokrotnego_ogladania());
-                    Label_a_f_promocja1.setText(Integer.toString(produkt.getPromocja()));
-
-                    Label_a_f_ocenaUzytkownika1.setText(Double.toString(produkt.getOcena_uzytkownika()));
-                    JPanel_menu_dolny.removeAll();
-                    JPanel_menu_dolny.add(JPanel_gosc_film);
-                    JPanel_menu_dolny.repaint();
-                    JPanel_menu_dolny.revalidate();
-                    */
                 }
             }
         };
@@ -334,17 +302,12 @@ public class VOD_okienko {
         Label_a_f_czasTrwania.setText(produkt.getCzas_trwania());
         Label_a_f_opis.setText(produkt.getOpis());
         Label_a_f_zdjecie.setText("");
+        JLabel_zwiastun.setVisible(true);
         JLabel_zwiastun.removeAll();
         JLabel_zwiastun.setText("zwiastuny");
         JLabel_zwiastun.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         JLabel_zwiastun.setForeground(Color.black);
 
-
-
-       /* JLabel_zwiastun.setText("zwiastuny:");
-        JLabel_zwiastun.setForeground(Color.black);
-        JLabel_zwiastun.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        ustawSezon(JLabel_zwiastun, produkt);/*/
         ImageIcon icon1 = new ImageIcon(new ImageIcon(produkt.getZdjecie_sciezka()).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
         //dodanie linkow do Jpanel_a_f_Linki
         //sprawdz czy wql jest kolejka!
@@ -366,13 +329,18 @@ public class VOD_okienko {
         JPanel_a_f_linki.validate();
         JPanel_a_f_linki.repaint();
         Label_a_f_zdjecie.setIcon(icon1);
+        Label_a_f_gatunek1.setVisible(true);
+        Label_a_f_gatunek.setVisible(true);
         Label_a_f_gatunek1.setText(produkt.getGatunek());
+        Label_a_f_dataProdukcji.setText("data produkcji");
         Label_a_f_dataProdukcji1.setText(produkt.getData_produkcji());
         //lista
         String nazwy_krajow = "";
         for (String kraj : produkt.getKraje_produkcji())
             nazwy_krajow = nazwy_krajow + kraj + " ";
         Label_a_f_krajeProdukcji1.setText(new NoweFilmy().ustawHTML(100, nazwy_krajow));
+        Label_a_f_listaAktorow.setVisible(true);
+        Label_a_f_listaAktorow1.setVisible(true);
         String aktorzy = "";
         for (String aktor : produkt.getLista_aktorow())
             aktorzy = aktorzy + aktor + "<br/>";
@@ -380,6 +348,10 @@ public class VOD_okienko {
         Label_a_f_cena1.setText(Double.toString(produkt.getCena()) + "zl");
 
         //dla filmu
+        Label_a_f_czasWielokrotnegoObejrzenia1.setVisible(true);
+        Label_a_f_czasWielokrotnegoObejrzenia.setVisible(true);
+        Label_a_f_promocja1.setVisible(true);
+        Label_a_f_promocja.setVisible(true);
         Label_a_f_czasWielokrotnegoObejrzenia1.setText(produkt.getCzas_wielokrotnego_ogladania());
         Label_a_f_promocja1.setText(Integer.toString(produkt.getPromocja()));
 
@@ -437,33 +409,26 @@ public class VOD_okienko {
         JPanel_a_f_linki.removeAll();
 
         //przycisk sezony
+        JLabel_zwiastun.setVisible(true);
         JLabel_zwiastun.setText("sezony");
         JLabel_zwiastun.setForeground(Color.blue);
         JLabel_zwiastun.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ustawSezon(JLabel_zwiastun, produkt);
-       /* if (produkt.getLinki_zwiastunow().size() != 0) {
-            JLabel jlabels[] = new JLabel[produkt.getLinki_zwiastunow().size()];
-            //tworzymy kopie kolejki
-            Queue<URI> linki = new ArrayDeque<>(produkt.getLinki_zwiastunow());
-            for (int i = 0; i < jlabels.length; i++) {
-                URI uri = linki.remove();
-                jlabels[i] = new JLabel();
-                jlabels[i].setText("<html> <a href=\"\">" + "link " + (i + 1) + "</a></html>");
-                jlabels[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
-                hyperlink(jlabels[i], uri);
-                JPanel_a_f_linki.add(jlabels[i]);
-            }
-        }*/
         JPanel_a_f_linki.validate();
         JPanel_a_f_linki.repaint();
         Label_a_f_zdjecie.setIcon(icon1);
+        Label_a_f_gatunek1.setVisible(true);
+        Label_a_f_gatunek.setVisible(true);
         Label_a_f_gatunek1.setText(produkt.getGatunek());
+        Label_a_f_dataProdukcji.setText("data produkcji");
         Label_a_f_dataProdukcji1.setText(produkt.getData_produkcji());
         //lista
         String nazwy_krajow = "";
         for (String kraj : produkt.getKraje_produkcji())
             nazwy_krajow = nazwy_krajow + kraj + " ";
         Label_a_f_krajeProdukcji1.setText(new NoweFilmy().ustawHTML(100, nazwy_krajow));
+        Label_a_f_listaAktorow.setVisible(true);
+        Label_a_f_listaAktorow1.setVisible(true);
         String aktorzy = "";
         for (String aktor : produkt.getLista_aktorow())
             aktorzy = aktorzy + aktor + "<br/>";
@@ -476,6 +441,50 @@ public class VOD_okienko {
         Label_a_f_czasWielokrotnegoObejrzenia.setVisible(false);
         Label_a_f_promocja1.setVisible(false);
         Label_a_f_promocja.setVisible(false);
+
+        Label_a_f_ocenaUzytkownika1.setText(Double.toString(produkt.getOcena_uzytkownika()));
+        JPanel_menu_dolny.removeAll();
+        JPanel_menu_dolny.add(JPanel_gosc_film);
+        JPanel_menu_dolny.repaint();
+        JPanel_menu_dolny.revalidate();
+
+    }
+    public void ustawLiveStream(LiveStream produkt){
+        Label_a_f_tytul.setText(produkt.getTytul());
+        Label_a_f_czasTrwania.setText(produkt.getCzas_trwania());
+        Label_a_f_opis.setText(produkt.getOpis());
+        Label_a_f_zdjecie.setText("");
+        ImageIcon icon1 = new ImageIcon(new ImageIcon(produkt.getZdjecie_sciezka()).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
+        //dodanie linkow do Jpanel_a_f_Linki
+        //sprawdz czy wql jest kolejka!
+        JPanel_a_f_linki.setLayout(new BoxLayout(JPanel_a_f_linki, BoxLayout.X_AXIS));
+        JPanel_a_f_linki.removeAll();
+
+        //przycisk sezony
+        JLabel_zwiastun.setVisible(false);
+
+        JPanel_a_f_linki.validate();
+        JPanel_a_f_linki.repaint();
+        Label_a_f_zdjecie.setIcon(icon1);
+        Label_a_f_gatunek1.setVisible(false);
+        Label_a_f_gatunek.setVisible(false);
+        Label_a_f_dataProdukcji.setText("data wyswietlenia");
+        Label_a_f_dataProdukcji1.setText(produkt.getDataWyswietlenia());
+        //lista
+        String nazwy_krajow = "";
+        for (String kraj : produkt.getKraje_produkcji())
+            nazwy_krajow = nazwy_krajow + kraj + " ";
+        Label_a_f_krajeProdukcji1.setText(new NoweFilmy().ustawHTML(100, nazwy_krajow));
+        Label_a_f_listaAktorow.setVisible(false);
+        Label_a_f_listaAktorow1.setVisible(false);
+        Label_a_f_cena1.setText(Double.toString(produkt.getCena()) + "zl");
+
+        //dla LiveStreamu
+
+        Label_a_f_czasWielokrotnegoObejrzenia1.setVisible(false);
+        Label_a_f_czasWielokrotnegoObejrzenia.setVisible(false);
+        Label_a_f_promocja1.setVisible(true);
+        Label_a_f_promocja.setVisible(true);
 
         Label_a_f_ocenaUzytkownika1.setText(Double.toString(produkt.getOcena_uzytkownika()));
         JPanel_menu_dolny.removeAll();
